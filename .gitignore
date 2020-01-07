@@ -1,1 +1,3 @@
 /node_modules
+/clients/node_modules
+/config/config.js
