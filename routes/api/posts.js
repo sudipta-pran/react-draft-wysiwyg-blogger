@@ -18,6 +18,7 @@ router.get('/:id', (req, res) => {
 
 //routes post a post
 router.post('/', (req, res) => {
+    console.log(req.body)
     const newPost = new Post({
         title: req.body.title,
         description: req.body.description
@@ -25,6 +26,7 @@ router.post('/', (req, res) => {
 
     newPost.save()
     .then(post => res.json(post))
+    .catch(err => res.status(500).json({"Error": err}))
 })
 
 //routes Update a post

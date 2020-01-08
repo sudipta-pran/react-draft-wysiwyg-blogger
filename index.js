@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require("cors")
 const connString = require('./config/config').mongoURI
 const posts = require('./routes/api/posts')
 
@@ -10,7 +11,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(bodyParser.json())
-
+app.use(cors())
 
 app.use('/static', express.static(__dirname + '/uploads'))
 const storage = multer.diskStorage({
