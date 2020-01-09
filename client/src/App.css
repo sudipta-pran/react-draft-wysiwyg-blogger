@@ -1,4 +1,4 @@
-.App {
+.post-list{
   text-align: center;
   width:90%;
   max-width:900px;
@@ -7,11 +7,24 @@
   background-color: #eee;
 }
 
-.post-list{
-  border:1px solid #222;
-}
-
 .single-post{
   background-color:#fefefe;
   padding: 20px 0;
+  border:1px solid #222;
+}
+
+.btn{
+  padding: 10px 20px;
+  background-color: #d02200;
+  text-decoration: none;
+  color:#f0f0f0;
+}
+.form-control{
+  margin-left:10px;
+  padding: 10px 20px;
+  margin-bottom:20px;
+}
+
+form{
+  margin:20px;
 }

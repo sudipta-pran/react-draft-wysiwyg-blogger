@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useHistory } from "react-router-dom";
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, convertToRaw } from 'draft-js';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -7,6 +8,7 @@ import {stateToHTML} from 'draft-js-export-html'
 export default function AddPost() {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState(EditorState.createEmpty())
+    const history = useHistory()
 
     const convertDescriptionFromJSONToHTML = () => {
         try{
@@ -15,9 +17,9 @@ export default function AddPost() {
           console.log(exp)
           return { __html: 'Error' }
         }
-      }
+    }
 
-    const uploadCB = (file) => {    
+    const uploadCallback = (file) => {    
         const formData = new FormData();
         formData.append('file', file);        
         
@@ -34,10 +36,8 @@ export default function AddPost() {
           .catch(error => {
               console.log(error)
               reject(error.toString())
-          })
-    
-        })   
-    
+          })    
+        }) 
     }
 
     const onSubmit = (e) => {
@@ -56,7 +56,12 @@ export default function AddPost() {
             body: JSON.stringify(newPost)
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            setTitle('')
+            setDescription(EditorState.createEmpty())
+            history.goBack()
+        })
         .catch(err => console.log("ERROR:",err))
     }
 
@@ -79,8 +84,8 @@ export default function AddPost() {
                         toolbarClassName="toolbar-class"
                         wrapperStyle={{ border: "2px solid green", marginBottom: "20px" }}
                         editorStyle={{ height: "300px", padding: "10px"}}
+                        toolbar={{ image: { uploadCallback }}}
                         onEditorStateChange={editorState => setDescription(editorState)}
-                        toolbar={{ image: { uploadCallback: uploadCB }}}
                     />
                 </div>
                 <br/>
